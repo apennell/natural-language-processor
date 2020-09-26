@@ -1,0 +1,19 @@
+{
+  "name": "natural_language_processing",
+  "version": "1.0.0",
+  "description": "Natural language processor for articles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apennell/natural-language-processing.git"
+  },
+  "author": "\"Annie Pennell <anniecpennell@gmail.com> (https://anniepennell.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apennell/natural-language-processing/issues"
+  },
+  "homepage": "https://github.com/apennell/natural-language-processing#readme"
+}
