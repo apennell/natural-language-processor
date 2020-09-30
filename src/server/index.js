@@ -14,8 +14,16 @@ app.get('/', (req, res) => {
 app.get('/api', (req, res) => {
   console.log(req);
   // Call MeaningCloud api
+  const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1';
+  const analysis = fetch(
+    `${baseUrl}?key=${process.env.MEANING_CLOUD_API_KEY}&url="${req}"&lang=en`
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      console.log('Response: ', res);
+    });
 
-  // res.send(apiresponse);
+  res.send(analysis);
 });
 
 app.listen(8080, () => {
