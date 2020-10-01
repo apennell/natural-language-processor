@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api', (req, res) => {
-  console.log(req);
+  console.log('API req: ', req);
   // Call MeaningCloud api
   const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1';
   const analysis = fetch(
@@ -26,6 +26,6 @@ app.get('/api', (req, res) => {
   res.send(analysis);
 });
 
-app.listen(8080, () => {
-  console.log('Listening on port 8080');
+app.listen(8081, () => {
+  console.log('Listening on port 8081');
 });

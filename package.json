@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/apennell/natural-language-processing#readme",
   "dependencies": {
+    "@babel/runtime": "^7.11.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "webpack": "^4.44.2",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
