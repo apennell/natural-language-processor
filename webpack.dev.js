@@ -11,6 +11,11 @@ module.exports = {
     library: 'Client',
   },
   devtool: 'source-map',
+  devServer: {
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
+  },
   module: {
     rules: [
       {

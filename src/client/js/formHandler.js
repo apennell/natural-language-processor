@@ -1,14 +1,18 @@
 const getProcessedResults = async (url) => {
+  console.log('url', url);
+
   const resp = await fetch('/api', {
-    method: 'GET',
+    method: 'POST',
     credentials: 'same-origin',
-    headers: { 'Content-type': 'application/json' },
-    body: JSON.stringify(url),
+    headers: { 'Content-type': 'text/plain' },
+    body: url,
   })
     .then((res) => res.json())
-    .catch((error) => console.error('Error retrieving results'));
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => console.error('Error retrieving results', error));
 
-  console.log('Response is: ', resp);
   return resp;
 };
 
@@ -17,13 +21,13 @@ const handleSubmit = async (e) => {
 
   // Get value from form field
   const input = document.querySelector('#url').value;
-  console.log('url input: ', input);
 
   // Validate value
 
   // If valid, call /api, then replace content with response
   const results = await getProcessedResults(input);
   console.log('results are: ', results);
+
   // If not valid, add error message under form field
 };
 
