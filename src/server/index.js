@@ -15,7 +15,6 @@ app.get('/', (req, res) => {
 });
 
 const getAnalysis = async (reqUrl) => {
-  console.log('reqUrl: ', reqUrl);
   const baseUrl = 'https://api.meaningcloud.com/sentiment-2.1';
   const key = process.env.MEANING_CLOUD_API_KEY;
   const options = {

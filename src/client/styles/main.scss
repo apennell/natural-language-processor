@@ -1,0 +1,36 @@
+.hidden {
+  display: none;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.label {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  color: green;
+  border: 0.125rem solid green;
+  border-radius: 4px;
+
+  &-negative {
+    color: lightgray;
+    border-color: lightgray;
+  }
+}
+
+.finding {
+  padding: 0.625rem 0;
+
+  .label:last-of-type {
+    @extend .label-negative;
+  }
+
+  &-negative {
+    padding: 0.625rem 0;
+
+    .label:first-of-type {
+      @extend .label-negative;
+    }
+  }
+}

@@ -1,11 +1,19 @@
+const inputField = document.querySelector('#url-input');
+const submitButton = document.querySelector('button[type="submit"]');
+const processingSection = document.querySelector('#processing');
+const resultsSection = document.querySelector('#results');
+const noResultsSection = document.querySelector('#no-results');
+
+let url;
+let truncatedUrl;
+
 // Submit URL to API to process with meaningcloud sentiment analysis
 const getProcessedResults = async (url) => {
-  console.log('url', url);
   /**
-   * RESULTS object structure (on success):
-   * agreement: "DISAGREEMENT"
+   * example RESULTS object structure (on success):
+   * agreement: "AGREEMENT"
    * confidence: "91"
-   * irony: "NONIRONIC"
+   * irony: "IRONIC"
    * model: "general_en"
    * score_tag: "P"
    * subjectivity: "SUBJECTIVE"
@@ -27,43 +35,69 @@ const getProcessedResults = async (url) => {
   return resp;
 };
 
-// Update UI to indicate loading status on submit
-const setLoading = (isLoading, url) => {
-  const submitButton = document.querySelector('button[type="submit"]');
-  submitButton.textContent = isLoading ? 'Processing...' : 'Process';
+// Update UI to indicate loading status on submit and when results are complete
+const setLoading = (isLoading) => {
+  submitButton.textContent = isLoading ? 'Analyzing...' : 'Analyze Content';
   submitButton.disabled = isLoading;
 
-  const resultsHeader = document.querySelector('#results-header');
-  resultsHeader.textContent = isLoading
-    ? `Analyzing '${url}'`
-    : `Results from analysis of '${url}'`;
+  if (isLoading) {
+    processingSection.children[0].firstElementChild.textContent = truncatedUrl;
+    processingSection.classList.remove('hidden');
+  } else {
+    processingSection.classList.add('hidden');
+  }
 };
 
 // Parse results and populate the UI
 const buildResultsUI = (results) => {
-  const resultsDisplay = document.createDocumentFragment();
   if (results.score_tag) {
-    // TODO: add additional result information and better structure DOM manipulation
-    const resultMain = document.createElement('h3');
-    resultMain.textContent = `This source was found to be overall ${results.score_tag}.`;
-    resultsDisplay.appendChild(resultMain);
-  } else {
-    const resultsEmpty = document.createElement('p');
-    resultsDisplay.textContent = 'We were unable to process this source.';
-    resultsDisplay.appendChild(resultsEmpty);
-  }
+    const { score_tag, subjectivity, irony, agreement, confidence } = results;
 
-  // FIXME: better setup for updating DOM display (not appendChild)
-  const resultsSection = document.querySelector('#results');
-  resultsSection.appendChild(resultsDisplay);
+    const link = document.querySelector('.results-subheader').children[0];
+    link.href = url;
+    link.textContent = `"${truncatedUrl}"`;
+
+    const polarityOpts = {
+      'P+': 'strongly positive',
+      P: 'positive',
+      NEU: 'neutral',
+      N: 'negative',
+      'N+': 'strongly negative',
+      NONE: 'without sentiment',
+    };
+
+    document.querySelector('#polarity').textContent = polarityOpts[score_tag];
+
+    document.querySelector('#subjectivity').classList =
+      subjectivity === 'SUBJECTIVE' ? 'finding' : 'finding-negative';
+
+    document.querySelector('#irony').classList =
+      irony === 'IRONIC' ? 'finding' : 'finding-negative';
+
+    document.querySelector('#agreement').classList =
+      agreement === 'AGREEMENT' ? 'finding' : 'finding-negative';
+
+    document.querySelector(
+      '#confidence'
+    ).children[0].textContent = `${confidence}%`;
+
+    resultsSection.classList.remove('hidden');
+  } else {
+    const link = noResultsSection.children[0].firstElementChild;
+    link.href = url;
+    link.textContent = `"${truncatedUrl}"`;
+    noResultsSection.classList.remove('hidden');
+  }
 };
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  resultsSection.classList.add('hidden');
+  noResultsSection.classList.add('hidden');
 
-  const inputField = document.querySelector('#url');
-  const url = inputField.value;
-  setLoading(true, url);
+  url = inputField.value;
+  truncatedUrl = url.length > 75 ? `${url.slice(0, 75)}...` : url;
+  setLoading(true);
 
   // TODO: Validate value
   const valid = true;
@@ -77,7 +111,7 @@ const handleSubmit = async (e) => {
     // TODO: If not valid, add error message under form field
   }
 
-  setLoading(false, url);
+  setLoading(false);
 };
 
 export default handleSubmit;

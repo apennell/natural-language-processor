@@ -12,19 +12,59 @@
       <section>
         <!-- Form -->
         <form>
-          <label for="url">Enter URL to process</label>
-          <input id="url" type="text" placeholder="http://anniepennell.com/" />
+          <label for="url-input">Enter URL to process</label>
+          <input
+            id="url-input"
+            type="text"
+            placeholder="http://anniepennell.com/"
+          />
           <button type="submit" onclick="return Client.handleSubmit(event)">
-            Process
+            Analyze Content
           </button>
         </form>
       </section>
-      <section>
-        <!-- Response results -->
-        <h2 id="results-header"></h2>
-        <div id="results"></div>
+
+      <section id="processing" class="hidden">
+        <p>Analyzing "<span></span>"</p>
+      </section>
+
+      <section id="results" class="hidden">
+        <h2>Results of Sentiment Analysis</h2>
+        <p class="results-subheader">
+          We analyzed <a id="results-link"></a> and found the overall polarity
+          to be <span id="polarity" class="strong"></span>.
+        </p>
+        <h3>Additional findings</h3>
+        <p id="subjectivity">
+          Subjectivity:
+          <span class="label">Subjective</span>
+          <span class="label">Objective</span>
+        </p>
+        <p id="irony">
+          Irony:
+          <span class="label">Ironic</span>
+          <span class="label">Nonironic</span>
+        </p>
+        <p id="agreement">
+          Agreement:
+          <span class="label">Agreement</span>
+          <span class="label">Disagreement</span>
+        </p>
+
+        <p id="confidence">
+          Level of confidence in findings:
+          <span class="strong"></span>
+        </p>
+      </section>
+
+      <section id="no-results" class="hidden">
+        <p>
+          We tried to process <a></a> but were unable to find contents to
+          analyze.
+        </p>
       </section>
     </main>
-    <footer>This will be the footer</footer>
+    <!-- TODO: -->
+    <!-- <footer>This  will be the footer</footer> -->
   </body>
 </html>
