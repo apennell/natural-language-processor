@@ -1,5 +1,7 @@
 # Natural Language Processor
 
+## Technologies used
+
 ## Getting Started
 
 1. Clone repo

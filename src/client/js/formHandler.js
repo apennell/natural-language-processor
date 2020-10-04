@@ -1,5 +1,3 @@
-import validateUrl from './validations';
-
 const inputField = document.querySelector('#url-input');
 const submitButton = document.querySelector('button[type="submit"]');
 const errorMessage = document.querySelector('label.error');
@@ -103,7 +101,7 @@ const handleSubmit = async (e) => {
   truncatedUrl = url.length > 75 ? `${url.slice(0, 75)}...` : url;
   setLoading(true);
 
-  const isValid = validateUrl(url);
+  const isValid = Client.validateUrl(url);
 
   if (isValid) {
     errorMessage.classList.add('hidden');
