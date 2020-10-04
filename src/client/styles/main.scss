@@ -6,7 +6,7 @@
   font-weight: bold;
 }
 
-.label {
+.result-label {
   margin: 0.5rem;
   padding: 0.5rem;
   color: green;
@@ -22,15 +22,15 @@
 .finding {
   padding: 0.625rem 0;
 
-  .label:last-of-type {
-    @extend .label-negative;
+  .result-label:last-of-type {
+    @extend .result-label-negative;
   }
 
   &-negative {
     padding: 0.625rem 0;
 
-    .label:first-of-type {
-      @extend .label-negative;
+    .result-label:first-of-type {
+      @extend .result-label-negative;
     }
   }
 }

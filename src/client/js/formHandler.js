@@ -1,5 +1,8 @@
+import validateUrl from './validations';
+
 const inputField = document.querySelector('#url-input');
 const submitButton = document.querySelector('button[type="submit"]');
+const errorMessage = document.querySelector('label.error');
 const processingSection = document.querySelector('#processing');
 const resultsSection = document.querySelector('#results');
 const noResultsSection = document.querySelector('#no-results');
@@ -92,6 +95,7 @@ const buildResultsUI = (results) => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  console.log('submitted');
   resultsSection.classList.add('hidden');
   noResultsSection.classList.add('hidden');
 
@@ -99,16 +103,16 @@ const handleSubmit = async (e) => {
   truncatedUrl = url.length > 75 ? `${url.slice(0, 75)}...` : url;
   setLoading(true);
 
-  // TODO: Validate value
-  const valid = true;
+  const isValid = validateUrl(url);
 
-  if (valid) {
+  if (isValid) {
+    errorMessage.classList.add('hidden');
     const results = await getProcessedResults(url);
     console.log('results are: ', results);
     buildResultsUI(results);
     inputField.value = '';
   } else {
-    // TODO: If not valid, add error message under form field
+    errorMessage.classList.remove('hidden');
   }
 
   setLoading(false);

@@ -12,12 +12,15 @@
       <section>
         <!-- Form -->
         <form>
-          <label for="url-input">Enter URL to process</label>
+          <label for="url-input" class="">Enter URL to process</label>
           <input
             id="url-input"
-            type="text"
+            type="url"
             placeholder="http://anniepennell.com/"
           />
+          <label for="url-input" class="error hidden"
+            >Please enter a valid url.</label
+          >
           <button type="submit" onclick="return Client.handleSubmit(event)">
             Analyze Content
           </button>
@@ -37,18 +40,18 @@
         <h3>Additional findings</h3>
         <p id="subjectivity">
           Subjectivity:
-          <span class="label">Subjective</span>
-          <span class="label">Objective</span>
+          <span class="result-label">Subjective</span>
+          <span class="result-label">Objective</span>
         </p>
         <p id="irony">
           Irony:
-          <span class="label">Ironic</span>
-          <span class="label">Nonironic</span>
+          <span class="result-label">Ironic</span>
+          <span class="result-label">Nonironic</span>
         </p>
         <p id="agreement">
           Agreement:
-          <span class="label">Agreement</span>
-          <span class="label">Disagreement</span>
+          <span class="result-label">Agreement</span>
+          <span class="result-label">Disagreement</span>
         </p>
 
         <p id="confidence">
