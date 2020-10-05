@@ -1,6 +1,15 @@
 # Natural Language Processor
 
-## Technologies used
+This is a Node-Express app that uses [MeaningCloud Sentiment Analysis API](https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1) to provide basic sentiment analysis of the content at a user-submitted URL.
+
+## Technologies
+
+- JavaScript, HTML, and Sass to make it show up and look good
+- Node and Express for the server and routing
+- Webpack and Babel to bundle and transpile for the browser
+- Jest for JavaScript testing
+- [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin) to enable service workers for minimal offline capabilities
+- [MeaningCloud Sentiment Analysis API](https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1)
 
 ## Getting Started
 
@@ -19,3 +28,7 @@
 1. Run `npm run build:prod` to build the app in production mode
 2. Run `npm start` to start the server
 3. Open http://localhost:3000/ in your browser to view the app
+
+### Testing
+
+`npm test` will run through all test suites once; `npm run test:watch` will run the tests once the remain in watch mode for updates.

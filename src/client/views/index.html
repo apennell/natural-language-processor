@@ -18,9 +18,7 @@
             type="url"
             placeholder="http://anniepennell.com/"
           />
-          <label for="url-input" class="error hidden"
-            >Please enter a valid url.</label
-          >
+          <label for="url-input" class="error hidden"></label>
           <button type="submit" onclick="return Client.handleSubmit(event)">
             Analyze Content
           </button>
@@ -69,5 +67,14 @@
     </main>
     <!-- TODO: -->
     <!-- <footer>This  will be the footer</footer> -->
+
+    <script>
+      // Add service workers if supported
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+    </script>
   </body>
 </html>

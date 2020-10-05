@@ -31,7 +31,12 @@ const getProcessedResults = async (url) => {
     .then((res) => {
       return res;
     })
-    .catch((error) => console.error('Error retrieving results', error));
+    .catch((error) => {
+      Object.assign(errorMessage, {
+        textContent: `Error retrieving results: ${error}`,
+        classList: 'error',
+      });
+    });
 
   return resp;
 };
@@ -93,7 +98,6 @@ const buildResultsUI = (results) => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  console.log('submitted');
   resultsSection.classList.add('hidden');
   noResultsSection.classList.add('hidden');
 
@@ -106,11 +110,15 @@ const handleSubmit = async (e) => {
   if (isValid) {
     errorMessage.classList.add('hidden');
     const results = await getProcessedResults(url);
-    console.log('results are: ', results);
-    buildResultsUI(results);
     inputField.value = '';
+    if (results) {
+      buildResultsUI(results);
+    }
   } else {
-    errorMessage.classList.remove('hidden');
+    Object.assign(errorMessage, {
+      textContent: 'Please enter a valid url.',
+      classList: 'error',
+    });
   }
 
   setLoading(false);
