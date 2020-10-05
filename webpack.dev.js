@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -38,6 +37,10 @@ module.exports = {
       dry: true,
       cleanStaleWebpackAssets: true,
       protectWebpackAssets: false,
+    }),
+    new webpack.DefinePlugin({
+      PRODUCTION: false,
+      'process.env.NODE_ENV': JSON.stringify('development'),
     }),
   ],
 };

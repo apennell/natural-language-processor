@@ -1,0 +1,14 @@
+footer {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  height: 3.5em;
+  font-family: $mono-font;
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    padding: 1em 0;
+  }
+}

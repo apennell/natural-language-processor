@@ -29,5 +29,8 @@ module.exports = {
       filename: './index.html',
     }),
     new WorkboxPlugin.GenerateSW(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
   ],
 };

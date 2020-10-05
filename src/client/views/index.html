@@ -3,74 +3,98 @@
   <head>
     <meta charset="utf-8" />
     <title>Natural Language Processor</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <header>
-      <h1>Natural Language Processor</h1>
-    </header>
-    <main>
-      <section>
-        <!-- Form -->
-        <form>
-          <label for="url-input" class="">Enter URL to process</label>
-          <input
-            id="url-input"
-            type="url"
-            placeholder="http://anniepennell.com/"
-          />
-          <label for="url-input" class="error hidden"></label>
-          <button type="submit" onclick="return Client.handleSubmit(event)">
-            Analyze Content
-          </button>
-        </form>
-      </section>
+    <div class="page">
+      <header>
+        <h1>Natural Language Processor</h1>
+      </header>
+      <main>
+        <section>
+          <form>
+            <label for="url-input" class="">Enter URL to process</label>
+            <input
+              id="url-input"
+              type="url"
+              placeholder="http://anniepennell.com/"
+            />
+            <label for="url-input" class="error hidden"></label>
+            <button type="submit" onclick="return Client.handleSubmit(event)">
+              Analyze Content
+            </button>
+          </form>
+        </section>
 
-      <section id="processing" class="hidden">
-        <p>Analyzing "<span></span>"</p>
-      </section>
+        <section id="processing" class="hidden minimal-wrap">
+          <p>Analyzing "<span class="strong"></span>"</p>
+        </section>
 
-      <section id="results" class="hidden">
-        <h2>Results of Sentiment Analysis</h2>
-        <p class="results-subheader">
-          We analyzed <a id="results-link"></a> and found the overall polarity
-          to be <span id="polarity" class="strong"></span>.
-        </p>
-        <h3>Additional findings</h3>
-        <p id="subjectivity">
-          Subjectivity:
-          <span class="result-label">Subjective</span>
-          <span class="result-label">Objective</span>
-        </p>
-        <p id="irony">
-          Irony:
-          <span class="result-label">Ironic</span>
-          <span class="result-label">Nonironic</span>
-        </p>
-        <p id="agreement">
-          Agreement:
-          <span class="result-label">Agreement</span>
-          <span class="result-label">Disagreement</span>
-        </p>
+        <section id="results" class="hidden">
+          <h2>Results of Sentiment Analysis</h2>
+          <p class="results-subheader">
+            We analyzed <a id="results-link"></a> and found the overall polarity
+            to be <span id="polarity" class="strong"></span>.
+          </p>
+          <div class="findings-wrapper">
+            <h3>Additional findings</h3>
+            <p id="subjectivity">
+              Subjectivity:
+              <span class="result-label positive">Subjective</span>
+              <span class="result-label negative">Objective</span>
+            </p>
+            <p id="irony">
+              Irony:
+              <span class="result-label positive">Ironic</span>
+              <span class="result-label negative">Nonironic</span>
+            </p>
+            <p id="agreement">
+              Agreement:
+              <span class="result-label positive">Agreement</span>
+              <span class="result-label negative">Disagreement</span>
+            </p>
 
-        <p id="confidence">
-          Level of confidence in findings:
-          <span class="strong"></span>
-        </p>
-      </section>
+            <p id="confidence">
+              Level of confidence in findings:
+              <span class="strong"></span>
+            </p>
+          </div>
+        </section>
 
-      <section id="no-results" class="hidden">
-        <p>
-          We tried to process <a></a> but were unable to find contents to
-          analyze.
-        </p>
-      </section>
-    </main>
-    <!-- TODO: -->
-    <!-- <footer>This  will be the footer</footer> -->
+        <section id="no-results" class="hidden minimal-wrap">
+          <p>
+            We tried to process <a></a> but were unable to find contents to
+            analyze.
+          </p>
+        </section>
+      </main>
 
+      <footer>
+        copyright&nbsp;
+        <a
+          href="https://github.com/apennell"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @apennell
+        </a>
+        &nbsp;2020 | sentiment analysis by&nbsp;
+        <a
+          href="https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          MeaningCloud
+        </a>
+      </footer>
+    </div>
     <script>
       // Add service workers if supported
-      if ('serviceWorker' in navigator) {
+      if (window.location.port !== '8080' && 'serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/service-worker.js');
         });
