@@ -1,7 +1,5 @@
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
-dotenv.config();
-
 const express = require('express');
 
 const app = express();
@@ -31,13 +29,12 @@ const getAnalysis = async (reqUrl) => {
   return analysis;
 };
 
+dotenv.config();
+
 // API route to retrieve and send sentiment analysis of given url
 app.post('/api', async (req, res) => {
   const analysis = await getAnalysis(req.body);
   res.send(analysis);
 });
 
-// Run server
-app.listen(3000, () => {
-  console.log('Listening on port 3000');
-});
+module.exports = app;

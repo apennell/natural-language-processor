@@ -1,4 +1,4 @@
-import validateUrl from '../validations';
+import validateUrl from '../client/js/validations';
 
 describe('Validations', () => {
   test('should have validateUrl defined', () => {
