@@ -28,9 +28,6 @@ const getProcessedResults = async (url) => {
     body: url,
   })
     .then((res) => res.json())
-    .then((res) => {
-      return res;
-    })
     .catch((error) => {
       Object.assign(errorMessage, {
         textContent: `Error retrieving results: ${error}`,
@@ -57,12 +54,14 @@ const setLoading = (isLoading) => {
 // Parse results and populate the UI
 const buildResultsUI = (results) => {
   if (results.score_tag) {
+    // Update UI to display successfully returned results
     const { score_tag, subjectivity, irony, agreement, confidence } = results;
 
     const link = document.querySelector('.results-subheader').children[0];
     link.href = url;
     link.textContent = `"${truncatedUrl}"`;
 
+    // MeaningCloud polarity key: display value
     const polarityOpts = {
       'P+': 'strongly positive',
       P: 'positive',
@@ -73,7 +72,14 @@ const buildResultsUI = (results) => {
     };
 
     document.querySelector('#polarity').textContent = polarityOpts[score_tag];
+    document.querySelector(
+      '#confidence'
+    ).children[0].textContent = `${confidence}%`;
 
+    /**
+     * Display findings visually, based on "positive" or "negative" results, eg:
+     * for subjectivity: subjective = positive, objective = negative (not subjective)
+     */
     document.querySelector('#subjectivity').classList =
       subjectivity === 'SUBJECTIVE' ? 'finding' : 'finding-negative';
 
@@ -83,12 +89,23 @@ const buildResultsUI = (results) => {
     document.querySelector('#agreement').classList =
       agreement === 'AGREEMENT' ? 'finding' : 'finding-negative';
 
-    document.querySelector(
-      '#confidence'
-    ).children[0].textContent = `${confidence}%`;
+    /**
+     * Add aria-hidden to result that is visually crossed out so that only true result is exposed
+     * to accessibility API
+     */
+    const positiveResults = document.querySelectorAll('.finding');
+    positiveResults.forEach((result) =>
+      result.children[1].setAttribute('aria-hidden', 'true')
+    );
+    const negativeResults = document.querySelectorAll('.finding-negative');
+    negativeResults.forEach((result) =>
+      result.children[0].setAttribute('aria-hidden', 'true')
+    );
 
+    // Wait until all results are added to DOM before updating visability to avoid extra repaints
     resultsSection.classList.remove('hidden');
   } else {
+    // Successful API call but no results found, so display the "No Results" UI section
     const link = noResultsSection.children[0].firstElementChild;
     link.href = url;
     link.textContent = `"${truncatedUrl}"`;
@@ -98,6 +115,8 @@ const buildResultsUI = (results) => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+
+  // Ensure sections are re-hidden, in case previously made visible
   resultsSection.classList.add('hidden');
   noResultsSection.classList.add('hidden');
 
